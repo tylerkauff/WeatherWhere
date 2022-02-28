@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">WeatherWhereJava</string>
+    <string name="use_my_location">Use my location</string>
 </resources>

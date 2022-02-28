@@ -3,10 +3,23 @@ package com.example.weatherwherejava;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+
+import java.io.Serializable;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -20,25 +33,30 @@ public class MainActivity extends AppCompatActivity {
     // TODO Change the lat and lon to device location
     public static String lat = "32.7767";
     public static String lon = "96.7970";
-
+    // Get the location provider
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Button btnSearch = findViewById(R.id.btnSearch);
         Button btnLocation = findViewById(R.id.btnLocation);
 
-        btnLocation.setOnClickListener(new View.OnClickListener() {
+        // For using set city data
+        btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getCurrentData();
+                EditText input = findViewById(R.id.etSearch);
+                String message = input.getText().toString();
+                getCurrentData(message);
             }
         });
     }
 
-    void getCurrentData() {
+    void getCurrentData(String city) {
         String apikey = getString(R.string.apikey);
         TextView weatherData = findViewById(R.id.tvInfo);
+        WeatherResponse finalWeather;
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BaseUrl)
@@ -47,15 +65,32 @@ public class MainActivity extends AppCompatActivity {
 
         String units = "metric";
         WeatherService service = retrofit.create(WeatherService.class);
-        Call<WeatherResponse> call = service.getCurrentWeatherData("32.7763", "-96.7969", apikey, units);
+        // TODO
+        Call<WeatherResponse> call = service.getCurrentWeatherData(city, apikey, units);
         call.enqueue(new Callback<WeatherResponse>() {
             @Override
             public void onResponse(@NonNull Call<WeatherResponse> call, @NonNull Response<WeatherResponse> response) {
                 if (response.code() == 200) {
+                    // Weather info object
                     WeatherResponse weatherResponse = response.body();
+                    //
                     assert weatherResponse != null;
+                    Intent intent = new Intent(MainActivity.this, WeatherActivity.class);
+                    intent.putExtra("country", weatherResponse.sys.country);
+                    intent.putExtra("temp", weatherResponse.main.temp);
+                    intent.putExtra("temp_min", weatherResponse.main.temp_min);
+                    intent.putExtra("temp_max", weatherResponse.main.temp_max);
+                    intent.putExtra("humidity", weatherResponse.main.humidity);
+                    intent.putExtra("pressure", weatherResponse.main.pressure);
 
-                    String stringBuilder = "Country: " +
+
+
+
+
+                    startActivity(intent);
+
+                    /*
+                    String stringBuilder = "City: " +
                             weatherResponse.sys.country +
                             "\n" +
                             "Temperature: " +
@@ -74,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
                             weatherResponse.main.pressure;
 
                     weatherData.setText(stringBuilder);
+                    */
+
                 }
             }
 
@@ -83,4 +120,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 }

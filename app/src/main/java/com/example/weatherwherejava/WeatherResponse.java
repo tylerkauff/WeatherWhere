@@ -58,6 +58,11 @@ class Wind {
     public float deg;
 }
 
+class City {
+    @SerializedName("name")
+    public String name;
+}
+
 class Main {
     @SerializedName("temp")
     public float temp;
