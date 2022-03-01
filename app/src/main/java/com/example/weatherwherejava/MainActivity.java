@@ -78,6 +78,10 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this, WeatherActivity.class);
                     intent.putExtra("country", weatherResponse.sys.country);
                     intent.putExtra("temp", weatherResponse.main.temp);
+
+                    intent.putExtra("clouds", weatherResponse.clouds.all);
+                    // intent.putExtra("rain", weatherResponse.rain.h3);
+
                     intent.putExtra("temp_min", weatherResponse.main.temp_min);
                     intent.putExtra("temp_max", weatherResponse.main.temp_max);
                     intent.putExtra("humidity", weatherResponse.main.humidity);
