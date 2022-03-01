@@ -23,7 +23,7 @@ public class WeatherActivity extends AppCompatActivity {
         ImageView img = findViewById(R.id.icon);
 
         Intent intent = getIntent();
-        String country = intent.getStringExtra("country");
+        String name = intent.getStringExtra("name");
         float min = intent.getFloatExtra("temp_min", 0);
         float max = intent.getFloatExtra("temp_max", 0);
         float clouds = intent.getFloatExtra("clouds", 0);
@@ -39,7 +39,7 @@ public class WeatherActivity extends AppCompatActivity {
                 // + "Rain: "  +  rain;
 
         info.setText(stringBuilder);
-        city.setText(country);
+        city.setText(name);
         currentTemp.setText("Currently " +  Double.toString(Math.round(f)) + "° F");
 
         if(clouds > 40 && clouds < 60){

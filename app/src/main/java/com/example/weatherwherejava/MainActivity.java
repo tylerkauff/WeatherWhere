@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("temp_max", weatherResponse.main.temp_max);
                     intent.putExtra("humidity", weatherResponse.main.humidity);
                     intent.putExtra("pressure", weatherResponse.main.pressure);
+                    intent.putExtra("name", weatherResponse.name);
 
 
 
