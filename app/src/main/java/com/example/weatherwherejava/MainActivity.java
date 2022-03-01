@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -40,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button btnSearch = findViewById(R.id.btnSearch);
-        Button btnLocation = findViewById(R.id.btnLocation);
 
         // For using set city data
         btnSearch.setOnClickListener(new View.OnClickListener() {
@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
 
     void getCurrentData(String city) {
         String apikey = getString(R.string.apikey);
-        TextView weatherData = findViewById(R.id.tvInfo);
         WeatherResponse finalWeather;
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -87,10 +86,7 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("humidity", weatherResponse.main.humidity);
                     intent.putExtra("pressure", weatherResponse.main.pressure);
                     intent.putExtra("name", weatherResponse.name);
-
-
-
-
+                    //intent.putExtra("rain", weatherResponse.rain.h3);
 
                     startActivity(intent);
 
@@ -121,7 +117,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<WeatherResponse> call, @NonNull Throwable t) {
-                weatherData.setText(t.getMessage());
+                Toast toast = Toast.makeText(MainActivity.this, "Oops!  We had a hard time getting that info.",
+                        Toast.LENGTH_LONG);
+                toast.show();
             }
         });
     }

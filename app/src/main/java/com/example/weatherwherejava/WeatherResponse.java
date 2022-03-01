@@ -47,7 +47,7 @@ class Clouds {
 }
 
 class Rain {
-    @SerializedName("3h")
+    @SerializedName("h3")
     public float h3;
 }
 

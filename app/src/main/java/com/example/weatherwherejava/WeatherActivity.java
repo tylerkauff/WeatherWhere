@@ -28,7 +28,7 @@ public class WeatherActivity extends AppCompatActivity {
         float max = intent.getFloatExtra("temp_max", 0);
         float clouds = intent.getFloatExtra("clouds", 0);
         float temp = intent.getFloatExtra("temp", 0);
-        // float rain = intent.getFloatExtra("rain", 0);
+        float rain = intent.getFloatExtra("rain", 0);
         double f = temp * 1.8 + 32;
 
 
