@@ -42,7 +42,7 @@ public class WeatherActivity extends AppCompatActivity {
         city.setText(name);
         currentTemp.setText("Currently " +  Double.toString(Math.round(f)) + "° F");
 
-        if(clouds > 40 && clouds < 60){
+        if(clouds >= 40 && clouds <= 60){
             img.setImageResource(R.drawable.partlycloudy);
         } else if(clouds < 40){
             img.setImageResource(R.drawable.sun);
